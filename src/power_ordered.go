@@ -4,6 +4,18 @@ import (
 	"math"
 )
 
+func isAbsValueGreater(a int, b int) bool {
+	if abs(a) > abs(b) {
+		return true
+	}
+
+	return false
+}
+
+func abs(a int) float64 {
+	return math.Abs(float64(a))
+}
+
 // GetPowerOrderedStartWithLimits takes an ordered list as input and returns an ordered list of the elements to the power of 2.
 // It is assumed that the list passed in ordered.
 func GetPowerOrderedStartWithLimits(l []int) []int {
@@ -11,7 +23,7 @@ func GetPowerOrderedStartWithLimits(l []int) []int {
 	res := make([]int, initLen)
 
 	for i := 1; i <= initLen; i++ {
-		if math.Abs(float64(l[0])) > math.Abs(float64(l[len(l)-1])) {
+		if isAbsValueGreater(l[0], l[len(l)-1]) {
 			res[initLen-i] = int(math.Pow(float64(l[0]), 2.0))
 			l = l[1:]
 		} else {
@@ -53,7 +65,7 @@ func GetPowerOrderedStartWithZero(l []int) []int {
 			continue
 		}
 
-		if math.Abs(float64(l[right])) < math.Abs(float64(l[left])) {
+		if !isAbsValueGreater(l[right], l[left]) {
 			res = addPowerTwo(res, l, right)
 			right++
 		} else {

@@ -16,6 +16,16 @@ func TestPowerOrderedStartWithZero(t *testing.T) {
 	assert.EqualValues(t, []int{0, 1, 4, 4, 9, 9, 100, 100}, GetPowerOrderedStartWithZero(l))
 }
 
+func TestPowerOrderedStartWithLimitsNoZero(t *testing.T) {
+	l := []int{-10, -3, -2, 1, 2, 3, 10}
+	assert.EqualValues(t, []int{1, 4, 4, 9, 9, 100, 100}, GetPowerOrderedStartWithLimits(l))
+}
+
+func TestPowerOrderedStartWithZeroNoZero(t *testing.T) {
+	l := []int{-10, -3, -2, 1, 2, 3, 10}
+	assert.EqualValues(t, []int{1, 4, 4, 9, 9, 100, 100}, GetPowerOrderedStartWithZero(l))
+}
+
 func getElements(n int) []int {
 	result := make([]int, n)
 	i := 0
@@ -48,11 +58,11 @@ func BenchmarkPowerOrderedStartWithLimitsFiveEltsMillionTimesMillion(b *testing.
 	GetPowerOrderedStartWithLimits(els)
 }
 func BenchmarkPowerOrderedStartWithZeroSimpleList(b *testing.B) {
-	els := []int{-10, -3, -2, 0, 1, 2, 3, 10}
+	els := []int{-10, -3, -2, 1, 2, 3, 10}
 	GetPowerOrderedStartWithZero(els)
 }
 
 func BenchmarkPowerOrderedStartWithLimitsSimpleList(b *testing.B) {
-	els := []int{-10, -3, -2, 0, 1, 2, 3, 10}
+	els := []int{-10, -3, -2, 1, 2, 3, 10}
 	GetPowerOrderedStartWithLimits(els)
 }
