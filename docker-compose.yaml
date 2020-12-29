@@ -4,4 +4,4 @@ services:
     build: 
       context: .
       dockerfile: dockerfile
-    command: go test /go/src/
+    command: go test /go/src/problem/
