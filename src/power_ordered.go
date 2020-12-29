@@ -16,6 +16,10 @@ func abs(a int) float64 {
 	return math.Abs(float64(a))
 }
 
+func powerTwo(a int) int {
+	return int(math.Pow(float64(a), 2.0))
+}
+
 // GetPowerOrderedStartWithLimits takes an ordered list as input and returns an ordered list of the elements to the power of 2.
 // It is assumed that the list passed in ordered.
 func GetPowerOrderedStartWithLimits(l []int) []int {
@@ -24,10 +28,10 @@ func GetPowerOrderedStartWithLimits(l []int) []int {
 
 	for i := 1; i <= initLen; i++ {
 		if isAbsValueGreater(l[0], l[len(l)-1]) {
-			res[initLen-i] = int(math.Pow(float64(l[0]), 2.0))
+			res[initLen-i] = powerTwo(l[0])
 			l = l[1:]
 		} else {
-			res[initLen-i] = int(math.Pow(float64(l[len(l)-1]), 2.0))
+			res[initLen-i] = powerTwo(l[len(l)-1])
 			l = l[:len(l)-1]
 		}
 
@@ -37,7 +41,7 @@ func GetPowerOrderedStartWithLimits(l []int) []int {
 }
 
 func addPowerTwo(dst []int, src []int, idx int) []int {
-	dst = append(dst, int(math.Pow(float64(src[idx]), 2.0)))
+	dst = append(dst, powerTwo(src[idx]))
 	return dst
 }
 
@@ -47,7 +51,7 @@ func GetPowerOrderedStartWithZero(l []int) []int {
 	initLen := len(l)
 	var res []int
 
-	start := findAbsoluteSmallestIdx(l)
+	start := GetMinAbsIdx(l)
 	right := start + 1
 	left := start - 1
 
@@ -76,33 +80,27 @@ func GetPowerOrderedStartWithZero(l []int) []int {
 	return res
 }
 
-func findAbsoluteSmallestIdx(l []int) int {
-	for i := 0; ; i++ {
-		posIdx := binarySearch(l, i)
-		negIdx := binarySearch(l, -i)
-		if posIdx != -1 {
-			return posIdx
-		}
-
-		if negIdx != -1 {
-			return negIdx
-		}
-	}
-}
-
-func binarySearch(array []int, target int) int {
+// GetMinAbsIdx returns the index of the minimum absolute value of a list.
+// The algorithm is derived from binarySearch algorithm and has a complexity of O(log(n)).
+func GetMinAbsIdx(l []int) int {
 	startIndex := 0
-	endIndex := len(array) - 1
-	midIndex := len(array) / 2
+	endIndex := len(l) - 1
+	midIndex := len(l) / 2
 
+	minIdx := midIndex
+	min := abs(l[midIndex])
 	for startIndex <= endIndex {
-		value := array[midIndex]
-
-		if value == target {
-			return midIndex
+		value := l[midIndex]
+		if abs(value) < min {
+			minIdx = midIndex
+			min = abs(value)
 		}
 
-		if value > target {
+		if min == 0 {
+			break
+		}
+
+		if value > 0 {
 			endIndex = midIndex - 1
 			midIndex = (startIndex + endIndex) / 2
 			continue
@@ -112,5 +110,5 @@ func binarySearch(array []int, target int) int {
 		midIndex = (startIndex + endIndex) / 2
 	}
 
-	return -1
+	return minIdx
 }

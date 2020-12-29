@@ -6,6 +6,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestGetMinAbsContainsZero(t *testing.T) {
+	l := []int{-2, 0, 1, 2, 3, 10}
+	assert.EqualValues(t, 1, GetMinAbsIdx(l))
+}
+
+func TestGetMinAbsNotContainsZero(t *testing.T) {
+	l := []int{-10, -3, -2, 1, 2, 3, 10}
+	assert.EqualValues(t, 3, GetMinAbsIdx(l))
+}
+
+func TestGetMinAbsEdgeCase(t *testing.T) {
+	l := []int{-10, -3, -2, 0, 1, 2, 3, 10}
+	assert.EqualValues(t, 3, GetMinAbsIdx(l))
+}
+
 func TestPowerOrderedStartWithLimits(t *testing.T) {
 	l := []int{-10, -3, -2, 0, 1, 2, 3, 10}
 	assert.EqualValues(t, []int{0, 1, 4, 4, 9, 9, 100, 100}, GetPowerOrderedStartWithLimits(l))
@@ -14,6 +29,11 @@ func TestPowerOrderedStartWithLimits(t *testing.T) {
 func TestPowerOrderedStartWithZero(t *testing.T) {
 	l := []int{-10, -3, -2, 0, 1, 2, 3, 10}
 	assert.EqualValues(t, []int{0, 1, 4, 4, 9, 9, 100, 100}, GetPowerOrderedStartWithZero(l))
+}
+
+func TestPowerOrderedStartWithZeroLeftUnbalanced(t *testing.T) {
+	l := []int{-1, 0, 1, 2, 3, 10}
+	assert.EqualValues(t, []int{0, 1, 1, 4, 9, 100}, GetPowerOrderedStartWithZero(l))
 }
 
 func TestPowerOrderedStartWithLimitsNoZero(t *testing.T) {
