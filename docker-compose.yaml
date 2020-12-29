@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  uat:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    command: go test /go/src/
